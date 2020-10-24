@@ -1,2 +1,2 @@
-# exercise
-课程实验
+# CourseCode
+课程实验代码

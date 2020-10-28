@@ -37,7 +37,7 @@ double get_fib_by_GF(int n)     //通项公式
     return ( pow((1+sqrt_5)/2, n)-pow((1-sqrt_5)/2, n) ) / sqrt_5;
 }
 
-uLL Fib_DGS[10000];
+uLL Fib_DP[10000];
 
 uLL get_fib_by_DT(int n)        //递推算法 DiTui
 {
@@ -59,11 +59,11 @@ uLL get_fib_by_DG(int n)        //递归算法 DiGui
     return get_fib_by_DG(n-1) + get_fib_by_DG(n-2);
 }
 
-uLL get_fib_by_DGS(int n)        //带保存结果的递归算法 (或许算动态规划？ Maybe)  DiGui with Save
+uLL get_fib_by_DP(int n)        //带保存结果的递归算法 (或许算动态规划？ Maybe)  DiGui with Save
 {
     if(n <= 1)return n;
-    if(Fib_DGS[n] >= 1)return Fib_DGS[n];
-    return Fib_DGS[n] = get_fib_by_DGS(n-1) + get_fib_by_DGS(n-2);
+    if(Fib_DP[n] >= 1)return Fib_DP[n];
+    return Fib_DP[n] = get_fib_by_DP(n-1) + get_fib_by_DP(n-2);
 }
 
 uLL get_fib_by_Matrix(int n)       //矩阵加速
@@ -93,6 +93,12 @@ uLL get_fib_by_Matrix(int n)       //矩阵加速
 int main()
 {
     int i;
-    for(i=1;i<=10;i++)cout<<get_fib_by_GF(i)<<endl;
-    
+    for(i=1;i<=10;i++)
+    {
+        cout<<get_fib_by_GF(i)<<endl;
+        cout<<get_fib_by_DT(i)<<endl;
+        cout<<get_fib_by_DG(i)<<endl;
+        cout<<get_fib_by_DP(i)<<endl;
+        cout<<endl;
+    }
 }

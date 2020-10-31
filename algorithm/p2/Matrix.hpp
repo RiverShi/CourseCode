@@ -13,21 +13,21 @@ struct Matrix
 	int m,n;
 	double element[maxn][maxn];
 	
-	Matrix():m(0),n(0)					//Ä¬ÈÏ¹¹Ôìº¯Êý
+	Matrix():m(0),n(0)					//é»˜è®¤æž„é€ å‡½æ•°
 	{
 		int i,j;
 		for(i=0;i<maxn;i++)
 		   for(j=0;j<maxn;j++)element[i][j]=0;
 	}
 	
-	Matrix(int x,int y):m(x),n(y)  		//½¨Á¢mxnµÄ Áã¾ØÕó 
+	Matrix(int x,int y):m(x),n(y)  		//å»ºç«‹mxnçš„ é›¶çŸ©é˜µ 
 	{
 		int i,j;
 		for(i=0;i<maxn;i++)
 		   for(j=0;j<maxn;j++)element[i][j]=0;
 	}
 	
-	Matrix(int k):m(k),n(k)  			//½¨Á¢Ò»¸öK½×µ¥Î»¾ØÕó 
+	Matrix(int k):m(k),n(k)  			//å»ºç«‹ä¸€ä¸ªKé˜¶å•ä½çŸ©é˜µ 
 	{
 		m=n=k;
 		int i,j;
@@ -45,7 +45,7 @@ struct Matrix
 		m=0;n=0;
 	}
 	
-	void assignment()   			//ÊäÈëÒ»¸ö¾ØÕó 
+	void assignment()   			//è¾“å…¥ä¸€ä¸ªçŸ©é˜µ 
 	{
 		scanf("%d %d",&m,&n);
 		int i,j;
@@ -67,7 +67,7 @@ struct Matrix
 		return C;
 	} 
 	
-	Matrix operator - ()const   		//È¡¸ºÔËËã 
+	Matrix operator - ()const   		//å–è´Ÿè¿ç®— 
 	{
 		Matrix B;
 		B.m=m;B.n=n;
@@ -92,7 +92,7 @@ struct Matrix
 		return C;
 	}
 	
-	Matrix operator * (const double& t)const  //Êý³Ë
+	Matrix operator * (const double& t)const  //æ•°ä¹˜
 	{
 		Matrix A;
 		A.m=m;A.n=n;
@@ -101,7 +101,7 @@ struct Matrix
 		return A;
 	}
 	
-	Matrix operator * (const Matrix& B)const  //¾ØÕóÏà³Ë 
+	Matrix operator * (const Matrix& B)const  //çŸ©é˜µç›¸ä¹˜ 
 	{
 		Matrix C;
 		if(n!=B.m){printf("wrong\n");return C;}
@@ -117,10 +117,10 @@ struct Matrix
 	}
 	
 	
-	Matrix inverse()const       				//¾ØÕóÇóÄæÔËËã 
+	Matrix inverse()const       				//çŸ©é˜µæ±‚é€†è¿ç®— 
 	{
 		Matrix E(m);
-		if(m!=n){printf("wrong\n");return E;}  	//È·ÈÏÎª·½Õó 
+		if(m!=n){printf("wrong\n");return E;}  	//ç¡®è®¤ä¸ºæ–¹é˜µ 
 		
 		Matrix A(*this);
 		double value = 1;
@@ -128,19 +128,19 @@ struct Matrix
 		double temp;
         int i,j;
 
-        for(int k=1;k<=rank;k++)  		//Í¨¹ý ÐÐ±ä»» »¯³ÉÉÏÈý½ÇÐÍ·½Õó £¬Í¬Ê±¼ÆËã¾ØÕóµÄÐÐÁÐÊ½µÄÖµ 
+        for(int k=1;k<=rank;k++)  		//é€šè¿‡ è¡Œå˜æ¢ åŒ–æˆä¸Šä¸‰è§’åž‹æ–¹é˜µ ï¼ŒåŒæ—¶è®¡ç®—çŸ©é˜µçš„è¡Œåˆ—å¼çš„å€¼ 
         {
             
-            if(fabs(A.element[k][k]) < eps)			//k:µ±Ç°´¦ÀíÖ¸±ê
+            if(fabs(A.element[k][k]) < eps)			//k:å½“å‰å¤„ç†æŒ‡æ ‡
             {
                 value = -value;
-                for(i=k+1;i<=rank;i++)				//i£ºÐÐÁÐÊ½ÐÐÖ¸±ê
+                for(i=k+1;i<=rank;i++)				//iï¼šè¡Œåˆ—å¼è¡ŒæŒ‡æ ‡
                 {
                     if(fabs(A.element[i][k])>eps)
                     {
-                        for (j=1;j<=rank;j++)		//j£ºÐÐÁÐÊ½ÁÐÖ¸±ê
+                        for (j=1;j<=rank;j++)		//jï¼šè¡Œåˆ—å¼åˆ—æŒ‡æ ‡
                         {   
-							//j´Ó1¿ªÊ¼£¬¶ø²»ÊÇ´Ók¿ªÊ¼ ,Çø±ðÓÚÐÐÁÐÊ½¼ÆËã 
+							//jä»Ž1å¼€å§‹ï¼Œè€Œä¸æ˜¯ä»Žkå¼€å§‹ ,åŒºåˆ«äºŽè¡Œåˆ—å¼è®¡ç®— 
                             swap(A.element[k][j], A.element[i][j]);
                             swap(E.element[k][j], E.element[i][j]);
                         }
@@ -159,7 +159,7 @@ struct Matrix
                     temp = A.element[i][k] / A.element[k][k];
                     for(j=1;j<=rank;j++)
                     {   
-						//j´Ó1¿ªÊ¼£¬¶ø²»ÊÇ´Ók¿ªÊ¼ ,Çø±ðÓÚÐÐÁÐÊ½¼ÆËã 
+						//jä»Ž1å¼€å§‹ï¼Œè€Œä¸æ˜¯ä»Žkå¼€å§‹ ,åŒºåˆ«äºŽè¡Œåˆ—å¼è®¡ç®— 
                         A.element[i][j] -= A.element[k][j] * temp;
                         E.element[i][j] -= E.element[k][j] * temp;
                     }
@@ -192,7 +192,7 @@ struct Matrix
 	}
 
 	
-	Matrix operator ^ (int k)  //K´ÎÃÝ 
+	Matrix operator ^ (int k)  //Kæ¬¡å¹‚ 
 	{
 		Matrix A(*this);
 		Matrix ans(m);
@@ -206,7 +206,7 @@ struct Matrix
 	}
 	
 	
-	Matrix Row_echelon()const // ÐÐ½×ÌÝÐÎ¾ØÕó 
+	Matrix Row_echelon()const // è¡Œé˜¶æ¢¯å½¢çŸ©é˜µ 
 	{
 		Matrix A(*this);
 		int i,j,k;
@@ -256,7 +256,7 @@ struct Matrix
 		return A; 
 	}
 	
-	Matrix Basic_solution()const  //Çó½â»ù´¡½âÏµ 
+	Matrix Basic_solution()const  //æ±‚è§£åŸºç¡€è§£ç³» 
 	{
 		Matrix A=Row_echelon();
 		
@@ -264,7 +264,7 @@ struct Matrix
 		int k;
 		double temp;
 		
-		for(i=1;i<=n;i++) A.element[0][i]=i;//±äÁ¿±ê¼Ç 
+		for(i=1;i<=n;i++) A.element[0][i]=i;//å˜é‡æ ‡è®° 
 		
 		for(k=1;k<=m&&k<=n;k++)
 		{
@@ -276,7 +276,7 @@ struct Matrix
 					{
 						for(j=0;j<=m;j++)
 						{
-							swap(A.element[j][k],A.element[j][i]);  //½»»»k,jÁ½ÁÐ£¬°üÀ¨°üÀ¨±ê¼Ç 
+							swap(A.element[j][k],A.element[j][i]);  //äº¤æ¢k,jä¸¤åˆ—ï¼ŒåŒ…æ‹¬åŒ…æ‹¬æ ‡è®° 
 						}
 						break;
 					}
@@ -292,9 +292,9 @@ struct Matrix
 		cout<<endl;
 		A.Print(); 
 		cout<<endl;
-		// ´ËÊ±¿ÉµÃ³ö R(A)=k-1;
+		// æ­¤æ—¶å¯å¾—å‡º R(A)=k-1;
 		 
-		int R=k-1; //¾ØÕóµÄÖÈ
+		int R=k-1; //çŸ©é˜µçš„ç§©
 		
 		for(k=R;k>=1;k--)
 		{
@@ -319,7 +319,7 @@ struct Matrix
 		
 	}
 	
-	void Print()const          //Êä³öº¯Êý 
+	void Print()const          //è¾“å‡ºå‡½æ•° 
 	{
 		if(m==0||n==0){printf("wrong\n");return;}
 	    int i,j;
@@ -333,7 +333,7 @@ struct Matrix
 	}	
 	
 };
-ostream& operator << (ostream &out,const Matrix& A)  //Êä³öÁ÷ 
+ostream& operator << (ostream &out,const Matrix& A)  //è¾“å‡ºæµ 
 { 
     if(A.m==0||A.n==0){printf("wrong\n");return out;}
 	int i,j;
@@ -345,7 +345,7 @@ ostream& operator << (ostream &out,const Matrix& A)  //Êä³öÁ÷
 	return out;
 } 
 
-Matrix operator * (double t, const Matrix& B )  //Êý³Ë
+Matrix operator * (double t, const Matrix& B )  //æ•°ä¹˜
 {
 	Matrix A(B);
 	for(int i=1;i<=A.m;i++)

@@ -15,45 +15,32 @@ struct Haffuman_node
     Haffuman_node():ch(0),Left(NULL),Right(NULL){}
 };
 
-map<int,int> ch_count;      //字符出现的次数统计
-map<int,int> code_book;    //字符的编码对应
-priority_queue<int, vector<int>, greater<int> > heap;   //没用上
-Haffuman_node* Haffuman_tree_root = new Haffuman_node;   //建立的haffuman树，建树过程得到code_book, decode的过程中当作字典树用于查询
-int ch_tot = 0, ch_spec = 0;        //字符总个数、字符种类数
-int freq[10000+10];                 //字符出现频次排序
+map<int,int> ch_count;     
+map<int,int> code_book;    
+priority_queue<int, vector<int>, greater<int> > heap;   
+Haffuman_node* Haffuman_tree_root = new Haffuman_node;   
+int ch_tot = 0, ch_spec = 0;        
+int freq[10000+10];                 
 char bin_code[50];
 char bin_inv[50];
 
-void get_freq(char*);      //字符计数
-void make_book(Haffuman_node* node, int L, int R, int sum, int code); //建树，code表示区间的编码前缀
-void encode(int ch);    //编码
-int decode(FILE* file);          //解码（对一个长二进制串）
+void get_freq(char*);     
+void make_book(Haffuman_node* node, int L, int R, int sum, int code); 
+void encode(int ch);    
+int decode(FILE* file);   
 void to_bin(int);
 
 void lookup(Haffuman_node*);
 
-char source_path[] = "haff_no_zh_cn.cpp";
+char source_path[] = "test.cpp";
 
 
 int main()
 {
     freopen("result.txt","w",stdout);
     get_freq(source_path);
-    
-    printf("文件字符总数：%d\n",ch_tot);
-    printf("文件字符种类数：%d\n",ch_spec);
+    make_book(Haffuman_tree_root, 1, ch_spec, ch_tot, 1);  
 
-    for(int i = 1; i <= ch_spec; i++)
-    {
-        int ch = freq[i]&(255);
-        int times = freq[i]>>8;
-        printf("%#x \t %d\n",ch,times);
-    }
-
-    printf("\n\n生成code_book\n");
-    make_book(Haffuman_tree_root, 1, ch_spec, ch_tot, 1);  //建树， 编码去除前导0和首1才是字符的haffuman编码
-
-    printf("\n\n遍历code_book\n");
     for(auto it = code_book.begin(); it != code_book.end(); it++)
     {
         printf("%#x\t  %d  \t(1)",it->first, it->second);
@@ -61,18 +48,13 @@ int main()
         printf("%s \n",bin_code);
     }
 
-    //遍历haffman树
-    printf("\n\n遍历haffman树\n");
     lookup(Haffuman_tree_root);
 
-    //文件编码
     FILE* source = fopen(source_path,"rb");
     FILE* encode_result = fopen("encode_result.txt","w");
     FILE* decode_result = fopen("decode_result.txt","w");
 
     setbuf(encode_result,NULL);
-
-    printf("\n\n编码\n");
     int ch;
     for(ch = fgetc(source); ch != EOF; ch = fgetc(source))
     {
@@ -85,11 +67,9 @@ int main()
     fclose(source);
     fclose(encode_result);
 
-    //文件解码测试
     encode_result = fopen("encode_result.txt","rb");
     
     setbuf(encode_result,NULL);
-    printf("\n\n解码\n");
 
     while(ch = decode(encode_result))
     {
@@ -154,14 +134,14 @@ int decode(FILE* file)
     return 0;
 }
 
-void make_book(Haffuman_node* node, int L, int R, int sum, int code) //code表示区间的编码前缀
+void make_book(Haffuman_node* node, int L, int R, int sum, int code) 
 {
     //printf("%d\t%d\t%d\t%d\n",L,R,sum,code);
     //if(code < 0)return;
-    if(L == R)  //区间只有一个值，确定编码，返回
+    if(L == R)
     {
         int ch = freq[L]&(255);
-        code_book[ch] = code;  //字符ch对应编码为code
+        code_book[ch] = code; 
         node->ch = ch;
         to_bin(code);
         printf("coding\t%#x\t %s\t %c\n",ch,bin_code,char(node->ch));
@@ -171,7 +151,6 @@ void make_book(Haffuman_node* node, int L, int R, int sum, int code) //code表�
     node->Left  = new Haffuman_node;
     node->Right = new Haffuman_node;
 
-    //寻找平分点
     int acc = 0, i;
     for(i = L; i <= R; i++)
     {
@@ -181,7 +160,6 @@ void make_book(Haffuman_node* node, int L, int R, int sum, int code) //code表�
     int Mid = i, m = freq[Mid]>>8;
     if(2*acc-sum > sum+2*m-2*acc) {Mid = Mid -1; acc-=m;}
 
-    //递归建树
     make_book(node->Left, L, Mid, acc,code<<1);
     make_book(node->Right, Mid+1, R, sum-acc,(code<<1)|1);
 }
@@ -206,18 +184,18 @@ void get_freq(char* source_file)
         //printf("%d %d\n",it->first, it->second);
         key = it->first;
         val = it->second;
-        mix = (val<<8) + key;   //混合信息
+        mix = (val<<8) + key;   
         //heap.push(mix);
         freq[++ch_spec] = mix;
     }
 
     sort(freq+1, freq+1+ch_spec, [](int a, int b){return a > b;});
 
-    // cout<<endl;
-    // for(int i = 1; i <= ch_spec; i++)
-    // {
-    //     int ch = freq[i]&(255);
-    //     int times = freq[i]>>8;
-    //     printf("%d %d\n",ch,times);
-    // }
+    cout<<endl;
+    for(int i = 1; i <= ch_spec; i++)
+    {
+        int ch = freq[i]&(255);
+        int times = freq[i]>>8;
+        printf("%d %d\n",ch,times);
+    }
 }

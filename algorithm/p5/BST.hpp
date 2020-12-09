@@ -16,13 +16,15 @@ struct BST_node
 
 BST_node *BST_root = NULL;
 
-BST_node* BST_find(BST_node* root, int num); 
-BST_node* BST_insert(BST_node* root, int num);
-void visit(BST_node* root,  int array[]);
+int BST_find(BST_node *&root, int num); 
+BST_node* BST_find(BST_node *&root, int num, int& acc);
+BST_node* BST_insert(BST_node *&root, int num);
+void visit(BST_node *&root,  int array[]);
+void visit(BST_node *&root, int array[], int& index);
 
 // 定义此BST的左子树上的节点值小于根节点，右子树上的值大于根节点，相等的值用times域表示
 
-BST_node* BST_insert(BST_node* root, int num)    //向根节点为root的一颗BST中插入一个值为num的项
+BST_node* BST_insert(BST_node *&root, int num)    //向根节点为root的一颗BST中插入一个值为num的项
 {
     if(!root)   //空树
     {
@@ -38,13 +40,33 @@ BST_node* BST_insert(BST_node* root, int num)    //向根节点为root的一颗B
     return root;
 }
 
-BST_node* BST_find(BST_node* root, int num) 
+int BST_find(BST_node *&root, int num)
 {
-    if(!root)return NULL;
-    if(num < root->val)return BST_find(root->Left, num);
-    if(num > root->val)return BST_find(root->Right, num);
+    int acc = 0;
+    BST_find(root, num, acc);
+    return acc;
+}
+
+// BST_node* BST_find(BST_node *&root, int num)
+// {
+//     if(!root){return NULL;}
+//     if(num < root->val)return BST_find(root->Left, num, acc);
+//     if(num > root->val)return BST_find(root->Right, num, acc);
+//     return root;
+// }
+
+BST_node* BST_find(BST_node *&root, int num, int &acc)
+{
+    acc += 4; //递归传参惩罚
+    acc++;
+    if(!root){return NULL;}
+    acc++;
+    if(num < root->val)return BST_find(root->Left, num, acc);
+    acc++;
+    if(num > root->val)return BST_find(root->Right, num, acc);
     return root;
 }
+
 
 //删除可分为删除某个数（一次），删除某个数（所有），删除某个节点（给出地址）
 //可以假删除，更改times域的值即可，times == 0可认为节点不存在
@@ -55,24 +77,24 @@ BST_node* BST_find(BST_node* root, int num)
 //没有父节点域，当这个节点为叶节点时，没法把这个节点的父亲和它的联系断掉啊
 //算了，不写这种了
 //算了，不写删除了，这个实验里面也用不到删除。
-void BST_delete(BST_node* root)
+void BST_delete(BST_node *&root)
 {
     BST_node *L = root->Left, *R = root->Right;
 }
 
 //中序遍历输出
-void visit(BST_node* root,  int array[])
+void visit(BST_node *&root,  int array[])
 {
     int index = 0;
-    visit(root, index, array);
+    visit(root, array, index);
 }
 
-void visit(BST_node* root, int& index, int array[])
+void visit(BST_node *&root, int array[], int& index)
 {
-    if(root->Left != NULL)visit(root->Left, index, array);
+    if(root->Left != NULL)visit(root->Left, array, index);
     index++;
     array[index] = root->val;
-    if(root->Right != NULL)visit(root->Right, index, array);
+    if(root->Right != NULL)visit(root->Right, array, index);
 }
 
 

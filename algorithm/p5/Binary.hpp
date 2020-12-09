@@ -12,17 +12,32 @@ inline void du(int &d)
     if(Mark)d=-d; 
 }
 
-bool binary_find(int* array,int L,int R,int key)
+// bool binary_find(int* array,int L,int R,int key)
+// {
+// 	int Mid;
+// 	while(L<=R)
+// 	{
+// 		Mid=(L+R)>>1;
+// 		if(array[Mid]==key)return true;
+// 		if(array[Mid]<key)L=Mid+1;
+// 		else R=Mid-1;
+// 	}
+// 	return false;
+// }
+
+int binary_find(int* array,int L,int R,int key)
 {
 	int Mid;
+	int acc = 4;	//函数传参时间估算
 	while(L<=R)
 	{
 		Mid=(L+R)>>1;
-		if(array[Mid]==key)return true;
+		if(array[Mid]==key)return acc+3;
 		if(array[Mid]<key)L=Mid+1;
 		else R=Mid-1;
+		acc += 5;
 	}
-	return false;
+	return acc;
 }
 
 int binary_upper_find(int* array,int L,int R,int key)

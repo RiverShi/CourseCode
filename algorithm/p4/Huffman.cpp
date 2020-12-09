@@ -23,6 +23,7 @@ int ch_tot = 0, ch_spec = 0;        //字符总个数、字符种类数
 int freq[10000+10];                 //字符出现频次排序
 char bin_code[50];
 char bin_inv[50];
+int node_cnt = 0;
 
 void get_freq(char*);      //字符计数
 void make_book(Haffuman_node* node, int L, int R, int sum, int code); //建树，code表示区间的编码前缀
@@ -37,7 +38,7 @@ char source_path[] = "haff_no_zh_cn.cpp";
 
 int main()
 {
-    freopen("result.txt","w",stdout);
+    freopen("result1.txt","w",stdout);
     get_freq(source_path);
     
     printf("文件字符总数：%d\n",ch_tot);
@@ -64,11 +65,12 @@ int main()
     //遍历haffman树
     printf("\n\n遍历haffman树\n");
     lookup(Haffuman_tree_root);
+    printf("共%d个结点\n",node_cnt);
 
     //文件编码
     FILE* source = fopen(source_path,"rb");
-    FILE* encode_result = fopen("encode_result.txt","w");
-    FILE* decode_result = fopen("decode_result.txt","w");
+    FILE* encode_result = fopen("encode_result1.txt","w");
+    FILE* decode_result = fopen("decode_result1.txt","w");
 
     setbuf(encode_result,NULL);
 
@@ -86,7 +88,7 @@ int main()
     fclose(encode_result);
 
     //文件解码测试
-    encode_result = fopen("encode_result.txt","rb");
+    encode_result = fopen("encode_result1.txt","rb");
     
     setbuf(encode_result,NULL);
     printf("\n\n解码\n");
@@ -112,6 +114,7 @@ char line[100];
 void lookup(Haffuman_node* node)
 {
     len++;
+    node_cnt++;
     if(node->ch != 0 )
     {
         line[len]='\0';

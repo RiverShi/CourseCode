@@ -28,7 +28,7 @@ inline void du(int &d)
 int binary_find(int* array,int L,int R,int key)
 {
 	int Mid;
-	int acc = 4;	//函数传参时间估算
+	int acc = 0;	//函数传参时间估算
 	while(L<=R)
 	{
 		Mid=(L+R)>>1;

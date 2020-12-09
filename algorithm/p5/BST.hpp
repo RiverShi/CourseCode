@@ -40,6 +40,7 @@ BST_node* BST_insert(BST_node *&root, int num)    //向根节点为root的一颗
     return root;
 }
 
+
 int BST_find(BST_node *&root, int num)
 {
     int acc = 0;
@@ -57,7 +58,7 @@ int BST_find(BST_node *&root, int num)
 
 BST_node* BST_find(BST_node *&root, int num, int &acc)
 {
-    acc += 4; //递归传参惩罚
+    acc += 0; //递归传参惩罚
     acc++;
     if(!root){return NULL;}
     acc++;
@@ -66,6 +67,23 @@ BST_node* BST_find(BST_node *&root, int num, int &acc)
     if(num > root->val)return BST_find(root->Right, num, acc);
     return root;
 }
+
+// BST_node* BST_find(BST_node *&root, int num, int &acc)
+// {
+//     auto node = root;
+//     while(node != NULL)
+//     {
+//         acc++;
+//         if(num < root->val)node = node->Left;
+//         else 
+//         {
+//             acc++;
+//             if(num > root->val)node = node->Right;
+//             else return node;
+//         }
+//         acc++;
+//     }
+// }
 
 
 //删除可分为删除某个数（一次），删除某个数（所有），删除某个节点（给出地址）

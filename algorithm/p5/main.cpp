@@ -10,7 +10,7 @@ using namespace std;
 
 
 int A[2000],B[2000];
-int array[2000];
+int arr[2000];
 BST_node *treeA = NULL;
 BST_node *treeB = NULL;
 
@@ -46,13 +46,13 @@ int main()
     
     printf("aveA = %lf\naveB = %lf\naveAf = %lf\naveBf = %lf\n",aveA,aveB,aveAf,aveBf);
 
-    visit(treeB, array);
+    visit(treeB, arr);
 
     int sum = 0, sumf = 0;
     for(i = 1; i <= 1024; i++)
     {
-        sum += binary_find(array,1,1024,A[i]);
-        sumf += binary_find(array,1,1024,A[i]+1);
+        sum += binary_find(arr,1,1024,A[i]);
+        sumf += binary_find(arr,1,1024,A[i]+1);
     }
     double ave, avef;
     ave = (double)sum/1024;

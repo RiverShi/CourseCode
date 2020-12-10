@@ -96,9 +96,22 @@ BST_node* BST_find(BST_node *&root, int num, int &acc)
 //没有父节点域，当这个节点为叶节点时，没法把这个节点的父亲和它的联系断掉啊
 //算了，不写这种了
 //算了，不写删除了，这个实验里面也用不到删除。
-void BST_delete(BST_node *&root)
+//还是写个假删除把
+void BST_delete(BST_node *&root, int key)
 {
-    BST_node *L = root->Left, *R = root->Right;
+    auto node = root;
+    while(node != NULL)
+    {
+        if(key == node->val)
+        {
+            node->times--;
+            if(node->times < 0)node->times = 0;
+            return;
+        }
+        if(key < node->val)node = node->Left;
+        else node = node->Right;  
+    }
+    return;
 }
 
 //中序遍历输出

@@ -1,0 +1,17 @@
+PROMGEN: Xilinx Prom Generator P.20131013
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+promgen -w -p mcs -c FF -o D:\Xilinx\doc\cnt510//Untitled -x xcf01s -u 00000000 D:/Xilinx/doc/cnt510/count_display.bit 
+
+PROM D:\Xilinx\doc\cnt510\Untitled.prm map: Sat Dec 26 20:38:33 2020
+
+Calculating PROM checksum with fill value ff
+
+Format        Mcs86 (32-bit)
+Size          128K
+PROM start    0000:0000
+PROM end      0001:ffff
+PROM checksum 00e62c12
+
+        Addr1        Addr2                     Date File(s)
+    0000:0000    0001:1bdb     Dec 26 20:38:19 2020 D:/Xilinx/doc/cnt510/count_display.bit

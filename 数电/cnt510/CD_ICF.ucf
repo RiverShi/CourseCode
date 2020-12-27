@@ -1,0 +1,23 @@
+NET "clk"  LOC = B8;
+
+NET "mode<0>"  LOC = P11;
+NET "mode<1>"  LOC = L3;
+
+NET "an<0>"  LOC = F12;
+NET "an<1>"  LOC = J12;
+NET "an<2>"  LOC = M13;
+NET "an<3>"  LOC = K14;
+
+NET "seg<0>"  LOC = L14;
+NET "seg<1>"  LOC = H12;
+NET "seg<2>"  LOC = N14;
+NET "seg<3>"  LOC = N11;
+NET "seg<4>"  LOC = P12;
+NET "seg<5>"  LOC = L13;
+NET "seg<6>"  LOC = M12;
+
+NET "speed<0>"  LOC = G3;
+NET "speed<1>"  LOC = F3;
+NET "speed<2>"  LOC = E2;
+
+
